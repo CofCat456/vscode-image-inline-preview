@@ -1,0 +1,62 @@
+{
+  "publisher": "cofcat",
+  "name": "image-inline-preview",
+  "displayName": "Image Inline Preview",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.5.0",
+  "description": "",
+  "author": "CofCat <a25690756@gmail.com.tw>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/cofcat",
+  "homepage": "https://github.com/cofcat/vscode-image-inline-preview#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cofcat/vscode-image-inline-preview"
+  },
+  "bugs": {
+    "url": "https://github.com/cofcat/vscode-image-inline-preview/issues"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "main": "./dist/index.js",
+  "icon": "res/icon.png",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --external vscode",
+    "dev": "nr build --watch",
+    "lint": "eslint .",
+    "vscode:prepublish": "nr build",
+    "publish": "vsce publish --no-dependencies",
+    "pack": "vsce package --no-dependencies",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && nr publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.22.4",
+    "@antfu/ni": "^0.22.0",
+    "@types/node": "^20.14.11",
+    "@types/vscode": "^1.91.0",
+    "@vscode/vsce": "^2.30.0",
+    "bumpp": "^9.4.1",
+    "eslint": "^9.7.0",
+    "esno": "^4.7.0",
+    "pnpm": "^9.5.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.1.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vitest": "^2.0.3"
+  }
+}
