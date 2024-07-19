@@ -32,6 +32,47 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Image Inline Preview",
+      "properties": {
+        "image-inline-preview.languageIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+            "vue",
+            "svelte",
+            "html",
+            "pug",
+            "json",
+            "yaml"
+          ],
+          "description": "Array of language IDs to enable annotations"
+        },
+        "image-inline-preview.annotations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enabled Image inline annotations"
+        },
+        "image-inline-preview.position": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ],
+          "default": "before",
+          "description": "Position the image before or after the text"
+        }
+      }
+    }
+  },
   "scripts": {
     "build": "tsup src/index.ts --external vscode",
     "dev": "nr build --watch",
@@ -41,6 +82,8 @@
     "pack": "vsce package --no-dependencies",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
+    "prepare": "pnpm run update",
+    "update": "vscode-ext-gen --output src/generated/meta.ts",
     "release": "bumpp && nr publish"
   },
   "devDependencies": {
@@ -53,10 +96,12 @@
     "eslint": "^9.7.0",
     "esno": "^4.7.0",
     "pnpm": "^9.5.0",
+    "reactive-vscode": "0.2.0-beta.7",
     "rimraf": "^6.0.1",
     "tsup": "^8.1.1",
     "typescript": "^5.5.3",
     "vite": "^5.3.4",
-    "vitest": "^2.0.3"
+    "vitest": "^2.0.3",
+    "vscode-ext-gen": "^0.3.2"
   }
 }
