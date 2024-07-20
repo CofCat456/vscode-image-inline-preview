@@ -9,6 +9,7 @@ import {
 import {
   type DecorationOptions,
   DecorationRangeBehavior,
+  MarkdownString,
   Range,
   Uri,
   window,
@@ -78,7 +79,7 @@ export function useAnnotations() {
             contentIconPath: Uri.parse(toDataUrl(base64ToSvg(key, fontSize))),
           },
         },
-        hoverMessage: 'Hello World',
+        hoverMessage: new MarkdownString(`| |\n|:---:|\n| ![](${toDataUrl(base64ToSvg(key, 100))})`),
         key,
       }
       return item
