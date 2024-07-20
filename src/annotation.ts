@@ -1,6 +1,20 @@
-import { shallowRef, useActiveEditorDecorations, useActiveTextEditor, useDocumentText, useTextEditorSelections, watchEffect } from 'reactive-vscode'
-import { type DecorationOptions, DecorationRangeBehavior, Range, Uri, window } from 'vscode'
+import {
+  shallowRef,
+  useActiveEditorDecorations,
+  useActiveTextEditor,
+  useDocumentText,
+  useTextEditorSelections,
+  watchEffect,
+} from 'reactive-vscode'
+import {
+  type DecorationOptions,
+  DecorationRangeBehavior,
+  Range,
+  Uri,
+  window,
+} from 'vscode'
 import { REGEX_BASE64, config, editorConfig } from './config'
+import { base64ToSvg, toDataUrl } from './utils/svgs'
 
 export interface DecorationMatch extends DecorationOptions {
   key: string
@@ -9,11 +23,12 @@ export interface DecorationMatch extends DecorationOptions {
 export function useAnnotations() {
   const InlineIconDecoration = window.createTextEditorDecorationType({
     textDecoration: 'none; opacity: 0.6 !important;',
+    gutterIconSize: 'contain',
     rangeBehavior: DecorationRangeBehavior.ClosedClosed,
   })
 
   const HideTextDecoration = window.createTextEditorDecorationType({
-    textDecoration: 'none; display: none;', // a hack to inject custom style
+    textDecoration: 'none; display: none;',
   })
 
   const editor = useActiveTextEditor()
@@ -47,7 +62,7 @@ export function useAnnotations() {
       if (!key)
         continue
 
-      const startPos = editor.value.document.positionAt(match.index + 1)
+      const startPos = editor.value.document.positionAt(match.index)
       const endPos = editor.value.document.positionAt(match.index + match[0].length)
       keys.push([new Range(startPos, endPos), key])
     }
@@ -60,9 +75,7 @@ export function useAnnotations() {
         range,
         renderOptions: {
           [position]: {
-            contentIconPath: Uri.parse(key),
-            margin: `-${fontSize}px 2px; transform: translate(-2px, 3px);`,
-            width: `${fontSize * 1.1}px`,
+            contentIconPath: Uri.parse(toDataUrl(base64ToSvg(key, fontSize))),
           },
         },
         hoverMessage: 'Hello World',

@@ -13,4 +13,4 @@ export const editorConfig = defineConfigObject(
   },
 )
 
-export const REGEX_BASE64 = /data:image\/(?:jpeg|png|gif|webp|svg\+xml);base64,[A-Za-z0-9+/]+=*/g
+export const REGEX_BASE64 = /data:image\/(?:jpeg|png|gif|webp|svg\+xml);base64,\s*[A-Za-z0-9+/]+=*/g
