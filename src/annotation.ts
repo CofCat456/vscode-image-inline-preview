@@ -50,6 +50,7 @@ export function useAnnotations() {
 
     if (!config.annotations) {
       decorations.value = []
+      return
     }
 
     let match

@@ -33,6 +33,13 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "image-inline-preview.toggle-annotations",
+        "category": "ImageInlinePreview",
+        "title": "Toggle Annotations"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "Image Inline Preview",

@@ -12,12 +12,18 @@ export const extensionId = `${publisher}.${name}`
 /**
  * Type union of all commands
  */
-export type CommandKey = never
+export type CommandKey = 
+  | "image-inline-preview.toggle-annotations"
 
 /**
  * Commands map registed by `cofcat.image-inline-preview`
  */
 export const commands = {
+  /**
+   * Toggle Annotations
+   * @value `image-inline-preview.toggle-annotations`
+   */
+  toggleAnnotations: "image-inline-preview.toggle-annotations",
 } satisfies Record<string, CommandKey>
 
 /**
