@@ -80,7 +80,7 @@ export function useAnnotations() {
             contentIconPath: Uri.parse(toDataUrl(base64ToSvg(key, fontSize))),
           },
         },
-        hoverMessage: new MarkdownString(`| |\n|:---:|\n| ![](${toDataUrl(base64ToSvg(key, 100))})`),
+        hoverMessage: new MarkdownString(`| |\n|:---:|\n| ![](${toDataUrl(base64ToSvg(key, config.hoverSize))})`),
         key,
       }
       return item

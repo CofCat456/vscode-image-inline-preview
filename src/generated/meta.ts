@@ -33,17 +33,20 @@ export type ConfigKey =
   | "image-inline-preview.languageIds"
   | "image-inline-preview.annotations"
   | "image-inline-preview.position"
+  | "image-inline-preview.hoverSize"
 
 export interface ConfigKeyTypeMap {
   "image-inline-preview.languageIds": string[],
   "image-inline-preview.annotations": boolean,
   "image-inline-preview.position": ("before" | "after"),
+  "image-inline-preview.hoverSize": number,
 }
 
 export interface ConfigShorthandMap {
   languageIds: "image-inline-preview.languageIds",
   annotations: "image-inline-preview.annotations",
   position: "image-inline-preview.position",
+  hoverSize: "image-inline-preview.hoverSize",
 }
 
 export interface ConfigItem<T extends keyof ConfigKeyTypeMap> {
@@ -86,12 +89,23 @@ export const configs = {
     key: "image-inline-preview.position",
     default: "before",
   } as ConfigItem<"image-inline-preview.position">,
+  /**
+   * Size of the image when hovering
+   * @key `image-inline-preview.hoverSize`
+   * @default `150`
+   * @type `number`
+   */
+  hoverSize: {
+    key: "image-inline-preview.hoverSize",
+    default: 150,
+  } as ConfigItem<"image-inline-preview.hoverSize">,
 }
 
 export interface ScopedConfigKeyTypeMap {
   "languageIds": string[],
   "annotations": boolean,
   "position": ("before" | "after"),
+  "hoverSize": number,
 }
 
 export const scopedConfigs = {
@@ -100,6 +114,7 @@ export const scopedConfigs = {
     "languageIds": ["javascript","javascriptreact","typescript","typescriptreact","vue","svelte","html","pug","json","yaml"],
     "annotations": true,
     "position": "before",
+    "hoverSize": 150,
   } satisfies ScopedConfigKeyTypeMap,
 }
 

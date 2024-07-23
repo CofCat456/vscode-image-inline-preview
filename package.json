@@ -73,6 +73,11 @@
           ],
           "default": "before",
           "description": "Position the image before or after the text"
+        },
+        "image-inline-preview.hoverSize": {
+          "type": "number",
+          "default": 150,
+          "description": "Size of the image when hovering"
         }
       }
     }
