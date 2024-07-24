@@ -1,6 +1,12 @@
 import { Buffer } from 'node:buffer'
 import Base64 from './base64'
 
+export function urlToSvg(url: string, size: number) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <image width="100%" height="100%" xlink:href="${url}"/>
+    </svg>`
+}
+
 export function toDataUrl(str: string) {
   return `data:image/svg+xml;base64,${Base64.encode(str)}`
 }
@@ -62,10 +68,7 @@ export function base64ToSvg(base64Image: string, size: number, isWidth: boolean 
       <image width="100%" height="100%" xlink:href="${imageUrl}"/>
     </svg>`
   }
-  catch (error) {
-    console.error('Error parsing image size:', error)
-    return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
-      <image width="100%" height="100%" xlink:href="${imageUrl}"/>
-    </svg>`
+  catch {
+    return urlToSvg(imageUrl, size)
   }
 }

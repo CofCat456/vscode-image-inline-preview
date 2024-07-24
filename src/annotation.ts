@@ -11,11 +11,11 @@ import {
   DecorationRangeBehavior,
   MarkdownString,
   Range,
-  Uri,
   window,
 } from 'vscode'
 import { REGEX_BASE64, config, editorConfig } from './config'
 import { base64ToSvg, toDataUrl } from './utils/svgs'
+import { getDataURL } from './loader'
 
 export interface DecorationMatch extends DecorationOptions {
   key: string
@@ -53,19 +53,18 @@ export function useAnnotations() {
       return
     }
 
-    let match
-    const regex = REGEX_BASE64
-    regex.lastIndex = 0
     const keys: [Range, string][] = []
 
-    // eslint-disable-next-line no-cond-assign
-    while ((match = regex.exec(text.value!))) {
+    const regexBase64 = new RegExp(REGEX_BASE64, 'g')
+    const base64Matches = text.value!.matchAll(regexBase64)
+
+    for (const match of base64Matches) {
       const key = match[0]
       if (!key)
         continue
 
-      const startPos = editor.value.document.positionAt(match.index)
-      const endPos = editor.value.document.positionAt(match.index + match[0].length)
+      const startPos = editor.value.document.positionAt(match.index!)
+      const endPos = editor.value.document.positionAt(match.index! + match[0].length)
       keys.push([new Range(startPos, endPos), key])
     }
 
@@ -77,7 +76,7 @@ export function useAnnotations() {
         range,
         renderOptions: {
           [position]: {
-            contentIconPath: Uri.parse(toDataUrl(base64ToSvg(key, fontSize))),
+            contentIconPath: await getDataURL(key, fontSize),
           },
         },
         hoverMessage: new MarkdownString(`| |\n|:---:|\n| ![](${toDataUrl(base64ToSvg(key, config.hoverSize))})`),
